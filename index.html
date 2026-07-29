@@ -77,16 +77,16 @@
 
   /* ===== SECTION HEAD ===== */
   .sec{max-width:1120px;margin:0 auto;padding:60px 30px}
-  .sechd{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;margin-bottom:36px}
+  .sechd{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;margin-bottom:34px}
   .sechd .l .k{font-size:12.5px;font-weight:800;letter-spacing:.04em;color:var(--warm-ink);margin-bottom:10px;display:flex;align-items:center;gap:8px}
   .sechd .l .k::before{content:"";width:22px;height:4px;background:var(--yellow);border-radius:2px}
   .sechd .l h2{font-size:33px;font-weight:900;letter-spacing:-.04em;line-height:1.14}
-  .sechd .l p{font-size:15.5px;color:var(--ink2);margin-top:12px;max-width:660px;line-height:1.66}
+  .sechd .l p{font-size:15.5px;color:var(--ink2);margin-top:12px;max-width:680px;line-height:1.66}
   .sechd .l p b{color:var(--ink);font-weight:700}
   .sechd .cnt{font-size:13px;font-weight:700;color:var(--mute);white-space:nowrap;padding-bottom:5px}
 
-  /* ===== CASE GRID ===== */
-  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+  /* ===== FEATURED CASE GRID (2-up) ===== */
+  .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px}
   .card{position:relative;text-decoration:none;color:inherit;display:flex;flex-direction:column;
     background:var(--paper);border:1px solid var(--line);border-radius:20px;overflow:hidden;
     box-shadow:var(--shadow-sm);transition:transform .22s cubic-bezier(.2,.7,.3,1), box-shadow .22s, border-color .22s}
@@ -98,27 +98,41 @@
     text-align:center;padding:0 22px;color:var(--warm-ink);background:linear-gradient(150deg,#FFF6D6,#FFE9A8)}
   .card .phold .ic{font-size:28px;margin-bottom:7px}
   .card .phold .t{font-size:14px;font-weight:800;line-height:1.35}
-  .card .ep{position:absolute;top:12px;left:12px;z-index:3;font-size:11px;font-weight:900;letter-spacing:.05em;
-    color:var(--ink);background:#fff;border-radius:8px;padding:5px 9px;box-shadow:0 2px 8px rgba(0,0,0,.14)}
-  .card .up{position:absolute;top:12px;right:12px;z-index:3;font-size:10.5px;font-weight:900;letter-spacing:.05em;
+  .card .ep{position:absolute;top:13px;left:13px;z-index:3;font-size:11px;font-weight:900;letter-spacing:.05em;
+    color:var(--ink);background:#fff;border-radius:8px;padding:5px 10px;box-shadow:0 2px 8px rgba(0,0,0,.14)}
+  .card .up{position:absolute;top:13px;right:13px;z-index:3;font-size:10.5px;font-weight:900;letter-spacing:.05em;
     color:var(--ink);background:var(--yellow);border-radius:7px;padding:4px 9px}
   .card .up.live{background:var(--warm);color:#fff}
-  .card .bd{padding:18px 20px 20px;display:flex;flex-direction:column;flex:1}
+  .card .bd{padding:20px 22px 22px;display:flex;flex-direction:column;flex:1}
   .card .genre{font-size:11.5px;font-weight:800;color:var(--warm-ink);letter-spacing:.01em;margin-bottom:8px}
-  .card h3{font-size:18px;font-weight:800;letter-spacing:-.03em;line-height:1.34}
+  .card h3{font-size:19px;font-weight:800;letter-spacing:-.03em;line-height:1.34}
   .card .org{font-size:12.5px;color:var(--mute);font-weight:600;margin-top:7px}
   .card .desc{font-size:13.5px;color:var(--ink2);line-height:1.62;margin-top:11px;flex:1}
   .card .desc b{color:var(--ink);font-weight:700}
-  .card .metrow{display:flex;align-items:center;gap:16px;margin-top:16px;padding-top:14px;border-top:1px solid var(--line2)}
+  .card .metrow{display:flex;align-items:center;gap:18px;margin-top:16px;padding-top:14px;border-top:1px solid var(--line2)}
   .card .metrow .m{display:flex;flex-direction:column;gap:2px}
-  .card .metrow .m .mv{font-size:15.5px;font-weight:900;color:var(--ink);letter-spacing:-.02em;line-height:1}
+  .card .metrow .m .mv{font-size:16px;font-weight:900;color:var(--ink);letter-spacing:-.02em;line-height:1}
   .card .metrow .m .mv .u{color:var(--warm-ink)}
   .card .metrow .m .mk{font-size:10.5px;color:var(--mute);font-weight:600}
-  .card .go{margin-left:auto;font-size:20px;color:var(--warm);font-weight:900;transition:transform .2s}
+  .card .go{margin-left:auto;font-size:21px;color:var(--warm);font-weight:900;transition:transform .2s}
   .card:hover .go{transform:translateX(3px)}
 
+  /* ===== MORE PROJECTS (secondary, compact) ===== */
+  .more{background:var(--wash);border-top:1px solid var(--line)}
+  .mgrid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:6px}
+  .mcard{display:flex;gap:15px;align-items:center;background:var(--paper);border:1px solid var(--line);
+    border-radius:16px;padding:14px 16px;text-decoration:none;color:inherit;transition:.18s}
+  .mcard:hover{border-color:var(--yellow);box-shadow:var(--shadow-sm);transform:translateY(-2px)}
+  .mcard .mthumb{width:122px;height:76px;border-radius:11px;overflow:hidden;flex:none;background:#F1F0EB}
+  .mcard .mthumb img{width:100%;height:100%;object-fit:cover;object-position:center}
+  .mcard .mbody{min-width:0}
+  .mcard .mgenre{font-size:10.5px;font-weight:800;color:var(--warm-ink);margin-bottom:3px}
+  .mcard .mtitle{font-size:14.5px;font-weight:800;letter-spacing:-.02em;line-height:1.35}
+  .mcard .mdesc{font-size:12px;color:var(--ink2);margin-top:5px;line-height:1.5}
+  .mcard .mgo{margin-left:auto;color:var(--warm);font-weight:900;font-size:18px;flex:none;align-self:center}
+
   /* ===== CREDENTIALS ===== */
-  .creds{background:var(--wash);border-top:1px solid var(--line)}
+  .creds{border-top:1px solid var(--line)}
   .credlist{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:6px}
   .cred{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:20px 22px;display:flex;gap:14px;align-items:flex-start;transition:.18s}
   .cred:hover{border-color:var(--yellow);box-shadow:var(--shadow-sm)}
@@ -140,11 +154,11 @@
 
   @media (max-width:900px){
     .hwrap{grid-template-columns:1fr;gap:32px}.pcard{max-width:340px}
-    .grid{grid-template-columns:repeat(2,1fr)}.credlist{grid-template-columns:1fr}
     .hero h1{font-size:40px}.sechd{flex-direction:column;align-items:flex-start}
   }
-  @media (max-width:600px){
-    .grid{grid-template-columns:1fr}.hero h1{font-size:33px}
+  @media (max-width:760px){
+    .grid{grid-template-columns:1fr}.mgrid{grid-template-columns:1fr}.credlist{grid-template-columns:1fr}
+    .hero h1{font-size:33px}
     .nav .links a:not(.hire){display:none}
     .hero{padding:48px 22px 40px}.sec{padding:48px 22px}
   }
@@ -203,7 +217,7 @@
         <h2>데이터·AI로 문제를 푼 케이스</h2>
         <p>모두 <b>문제 정의 → 데이터·리서치 → 구조·정책 설계 → 협업 실행</b>의 흐름입니다. 특히 <b>AI 도입과 데이터로 판단·프로세스를 바꾼</b> 케이스에 주목해주세요.</p>
       </div>
-      <div class="cnt">총 6편</div>
+      <div class="cnt">핵심 4편</div>
     </div>
 
     <div class="grid">
@@ -221,7 +235,26 @@
           <div class="desc">검색 실패 문제를 VOC 3만 건으로 재정의하고 <b>AI 검색·추천을 도입</b>. 외부 개발사·데이터팀을 리딩해 <b>파이프라인과 정책</b>까지 설계했습니다.</div>
           <div class="metrow">
             <div class="m"><div class="mv"><span class="u">VOC 3만</span></div><div class="mk">리서치 근거</div></div>
-            <div class="m"><div class="mv"><span class="u">8.5점</span></div><div class="mk">내부 만족도</div></div>
+            <div class="m"><div class="mv"><span class="u">3-Party</span></div><div class="mk">협업 리딩</div></div>
+            <span class="go">→</span>
+          </div>
+        </div>
+      </a>
+
+      <a class="card" href="scoring.html">
+        <div class="thumb">
+          <img class="thumbimg" src="img/thumb-scoring.png" alt="입점 판별 모델" loading="lazy" onerror="if(this.dataset.f){this.style.display='none'}else{this.dataset.f=1;this.src=this.src.slice(0,-4)+'.jpg'}">
+          <div class="phold"><span class="ic">&#128200;</span><span class="t">감을<br>정량화</span></div>
+          <span class="ep">CASE 02</span><span class="up">DATA</span>
+        </div>
+        <div class="bd">
+          <div class="genre">데이터 의사결정 시스템 · 자동화</div>
+          <h3>감을 정량화한 브랜드 입점 판별 모델</h3>
+          <div class="org">이랜드 그룹 온라인 · 키디키디 · 2025</div>
+          <div class="desc">감에 의존하던 입점 판단을 <b>소셜·수요 데이터 자동 스코어링</b>으로 정량화. 판단의 <b>재현성과 속도</b>를 동시에 확보한 구조적 접근.</div>
+          <div class="metrow">
+            <div class="m"><div class="mv"><span class="u">+80%</span></div><div class="mk">브랜드 매출</div></div>
+            <div class="m"><div class="mv"><span class="u">+150%</span></div><div class="mk">효율</div></div>
             <span class="go">→</span>
           </div>
         </div>
@@ -231,7 +264,7 @@
         <div class="thumb">
           <img class="thumbimg" src="img/thumb-spao.png" alt="자사몰 UX 개편" loading="lazy" onerror="if(this.dataset.f){this.style.display='none'}else{this.dataset.f=1;this.src=this.src.slice(0,-4)+'.jpg'}">
           <div class="phold"><span class="ic">&#128202;</span><span class="t">데이터로<br>타깃 재정의</span></div>
-          <span class="ep">CASE 02</span><span class="up">BEST</span>
+          <span class="ep">CASE 03</span><span class="up">BEST</span>
         </div>
         <div class="bd">
           <div class="genre">데이터로 문제 재정의 · IA 설계</div>
@@ -250,13 +283,13 @@
         <div class="thumb">
           <img class="thumbimg" src="img/thumb-pavilion.png" alt="브랜드 전문관 설계" loading="lazy" onerror="if(this.dataset.f){this.style.display='none'}else{this.dataset.f=1;this.src=this.src.slice(0,-4)+'.jpg'}">
           <div class="phold"><span class="ic">&#127978;</span><span class="t">전문관<br>구조 설계</span></div>
-          <span class="ep">CASE 03</span><span class="up">BEST</span>
+          <span class="ep">CASE 04</span><span class="up">BEST</span>
         </div>
         <div class="bd">
           <div class="genre">정책·체계 설계 · 서비스 구조</div>
           <h3>탐색 패턴을 서비스로 — 브랜드 전문관 설계</h3>
           <div class="org">이랜드 그룹 온라인 · 키디키디 · 2025</div>
-          <div class="desc">'유저는 브랜드 단위로 탐색한다'는 <b>검색 패턴을 근거</b>로 전용관 구조·탐색 UI·등급별 입점 정책을 설계.</div>
+          <div class="desc">'유저는 브랜드 단위로 탐색한다'는 <b>검색 패턴을 근거</b>로 전용관 구조·탐색 UI·<b>등급별 입점 정책</b>을 설계.</div>
           <div class="metrow">
             <div class="m"><div class="mv"><span class="u">+323%</span></div><div class="mk">체류</div></div>
             <div class="m"><div class="mv"><span class="u">+344%</span></div><div class="mk">스크랩</div></div>
@@ -265,68 +298,43 @@
         </div>
       </a>
 
-      <a class="card" href="scoring.html">
-        <div class="thumb">
-          <img class="thumbimg" src="img/thumb-scoring.png" alt="입점 판별 모델" loading="lazy" onerror="if(this.dataset.f){this.style.display='none'}else{this.dataset.f=1;this.src=this.src.slice(0,-4)+'.jpg'}">
-          <div class="phold"><span class="ic">&#128200;</span><span class="t">감을<br>정량화</span></div>
-          <span class="ep">CASE 04</span><span class="up">DATA</span>
-        </div>
-        <div class="bd">
-          <div class="genre">데이터 의사결정 시스템 · 자동화</div>
-          <h3>감을 정량화한 브랜드 입점 판별 모델</h3>
-          <div class="org">이랜드 그룹 온라인 · 키디키디 · 2025</div>
-          <div class="desc">감에 의존하던 입점 판단을 <b>소셜·수요 데이터 자동 스코어링</b>으로 정량화. 판단의 재현성과 속도를 동시에 확보.</div>
-          <div class="metrow">
-            <div class="m"><div class="mv"><span class="u">+80%</span></div><div class="mk">브랜드 매출</div></div>
-            <div class="m"><div class="mv"><span class="u">+150%</span></div><div class="mk">효율</div></div>
-            <span class="go">→</span>
-          </div>
-        </div>
-      </a>
-
-      <a class="card" href="girog.html">
-        <div class="thumb">
-          <img class="thumbimg" src="img/thumb-girog.png" alt="기로그 창업" loading="lazy" onerror="if(this.dataset.f){this.style.display='none'}else{this.dataset.f=1;this.src=this.src.slice(0,-4)+'.jpg'}">
-          <div class="phold"><span class="ic">&#127868;</span><span class="t">육아 기록<br>버티컬 창업</span></div>
-          <span class="ep">CASE 05</span><span class="up">FOUNDER</span>
-        </div>
-        <div class="bd">
-          <div class="genre">0→1 창업 · 문제 정의·주도 실행</div>
-          <h3>육아 기록 버티컬 창업 &amp; 피벗 — '기로그'</h3>
-          <div class="org">쏘영 · 창업 · 2024 · 수상 8회</div>
-          <div class="desc">범용 기록앱을 <b>사용 데이터 분석</b>으로 '성장 확인·안심' 버티컬로 피벗. 유저의 진짜 니즈를 재정의한 0→1 (창업 수상 8회).</div>
-          <div class="metrow">
-            <div class="m"><div class="mv"><span class="u">66.2%</span></div><div class="mk">리텐션</div></div>
-            <div class="m"><div class="mv">E2E</div><div class="mk">전 과정</div></div>
-            <span class="go">→</span>
-          </div>
-        </div>
-      </a>
-
-      <a class="card" href="fastar.html">
-        <div class="thumb">
-          <img class="thumbimg" src="img/thumb-fastar.png" alt="글로벌 판매·현지화" loading="lazy" onerror="if(this.dataset.f){this.style.display='none'}else{this.dataset.f=1;this.src=this.src.slice(0,-4)+'.jpg'}">
-          <div class="phold"><span class="ic">&#127758;</span><span class="t">3개국<br>판매·현지화</span></div>
-          <span class="ep">CASE 06</span><span class="up">GLOBAL</span>
-        </div>
-        <div class="bd">
-          <div class="genre">E2E 실행 · 채널 현지화</div>
-          <h3>K-pop 스타일링 3개국 크로스보더 판매</h3>
-          <div class="org">쏘영 · 팀 4인(기획·마케팅) · 2021–2022</div>
-          <div class="desc">국내 상품을 대만·동남아·미국에 판매. 'K-pop 스타일링'을 공통 축으로 두고 채널·콘텐츠·광고를 현지화해 <b>기획~판매를 E2E로 실행</b>.</div>
-          <div class="metrow">
-            <div class="m"><div class="mv"><span class="u">3개국</span></div><div class="mk">판매</div></div>
-            <div class="m"><div class="mv"><span class="u">2%대</span></div><div class="mk">전환율</div></div>
-            <span class="go">→</span>
-          </div>
-        </div>
-      </a>
-
     </div>
   </section>
 
-  <section class="creds" id="credentials">
-    <div class="sec">
+  <section class="more">
+    <div class="sec" id="more">
+      <div class="sechd">
+        <div class="l">
+          <div class="k">MORE</div>
+          <h2>추가 프로젝트</h2>
+          <p>직무와 결은 조금 다르지만, <b>문제 정의부터 실행·성과</b>까지 스스로 이끈 프로젝트입니다.</p>
+        </div>
+      </div>
+      <div class="mgrid">
+        <a class="mcard" href="girog.html">
+          <div class="mthumb"><img src="img/thumb-girog.png" alt="기로그 창업" loading="lazy" onerror="if(this.dataset.f){this.style.display='none'}else{this.dataset.f=1;this.src=this.src.slice(0,-4)+'.jpg'}"></div>
+          <div class="mbody">
+            <div class="mgenre">0→1 창업 · 문제 정의·주도 실행</div>
+            <div class="mtitle">육아 기록 버티컬 창업 '기로그'</div>
+            <div class="mdesc">사용 데이터로 니즈를 재정의한 0→1 · 정부·기관 창업 수상 8회</div>
+          </div>
+          <span class="mgo">→</span>
+        </a>
+        <a class="mcard" href="fastar.html">
+          <div class="mthumb"><img src="img/thumb-fastar.png" alt="글로벌 판매" loading="lazy" onerror="if(this.dataset.f){this.style.display='none'}else{this.dataset.f=1;this.src=this.src.slice(0,-4)+'.jpg'}"></div>
+          <div class="mbody">
+            <div class="mgenre">글로벌 · E2E 실행</div>
+            <div class="mtitle">K-pop 스타일링 3개국 크로스보더 판매</div>
+            <div class="mdesc">기획~판매를 4인 팀에서 E2E로 실행 · 3개국 진출·현지화</div>
+          </div>
+          <span class="mgo">→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="creds">
+    <div class="sec" id="credentials">
       <div class="sechd">
         <div class="l">
           <div class="k">CREDENTIALS</div>
