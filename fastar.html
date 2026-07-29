@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3개국 크로스보더 판매·현지화 — 케이스 스터디</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+<style>
+  :root{
+    --ink:#17161A; --ink2:#4A4751; --mute:#6E6A76; --paper:#FCFBF9; --card:#FFFFFF;
+    --line:#E7E3DD; --accent:#F5820A; --accent-soft:#FFF4E3; --blue:#2B4C9B; --blue-soft:#E8EDF8;
+    --wash:#F4F1EC; --coral:#F0533F; --coral-soft:#FDECE7; --coral-ink:#B23320;
+    --shadow:0 1px 2px rgba(23,22,26,.03), 0 10px 30px rgba(23,22,26,.05);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Pretendard','Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:var(--ink);
+    background:var(--paper);line-height:1.6;letter-spacing:-.01em;-webkit-font-smoothing:antialiased;padding:48px 24px 64px;}
+  .page{max-width:880px;margin:0 auto}
+
+  .mast{border-top:3px solid var(--ink);padding-top:22px}
+  .eyebrow{display:flex;align-items:center;gap:10px;font-size:12px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--accent)}
+  .eyebrow .gray{color:var(--mute)}
+  h1{font-size:43px;font-weight:800;letter-spacing:-.035em;line-height:1.07;margin:18px 0 0}
+  .sub{font-size:17px;color:var(--ink2);margin-top:14px;font-weight:500;max-width:740px}
+  .meta{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:22px;padding-top:18px;border-top:1px solid var(--line);font-size:13px;color:var(--mute);font-weight:500}
+  .meta b{color:var(--ink2);font-weight:700}
+  .tags{margin-top:14px;display:flex;gap:8px;flex-wrap:wrap}
+  .tags span{font-size:11.5px;font-weight:600;color:var(--accent);background:var(--accent-soft);border-radius:999px;padding:5px 12px}
+
+  section{margin-top:46px}
+  .slabel{display:flex;align-items:center;gap:14px;margin-bottom:18px}
+  .slabel .n{font-size:12px;font-weight:800;color:var(--accent);letter-spacing:.05em}
+  .slabel h2{font-size:14px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--ink)}
+  .slabel .rule{flex:1;height:1px;background:var(--line)}
+  .lead{font-size:15.5px;color:var(--ink2);margin-bottom:16px;max-width:750px;line-height:1.68}
+  .lead b{color:var(--ink);font-weight:700}
+  p.body{font-size:15px;color:var(--ink2);line-height:1.7}
+  p.body b{color:var(--ink);font-weight:700}
+
+  .card{background:var(--card);border:1px solid var(--line);border-radius:4px;box-shadow:var(--shadow)}
+  .prow{display:grid;grid-template-columns:118px 1fr;gap:18px;padding:16px 26px;border-top:1px solid var(--line)}
+  .prow:first-child{border-top:none}
+  .prow .k{font-size:12.5px;font-weight:800;letter-spacing:.04em;color:var(--accent);padding-top:2px}
+  .prow .v{font-size:15px;color:var(--ink2);line-height:1.62}
+  .prow .v b{color:var(--ink);font-weight:700}
+
+  .chain{display:flex;align-items:stretch;flex-wrap:wrap;margin-top:16px}
+  .cn{flex:1;min-width:120px;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:14px 12px;
+    text-align:center;font-size:13px;font-weight:700;color:var(--ink2);line-height:1.35;box-shadow:var(--shadow);
+    display:flex;align-items:center;justify-content:center;position:relative}
+  .cn + .cn{margin-left:22px}
+  .cn + .cn::before{content:"\2192";position:absolute;left:-19px;top:50%;transform:translateY(-50%);color:var(--mute);font-weight:800;font-size:15px}
+  .cn.end{border-color:#F6D6A3;background:var(--accent-soft);color:#A85200}
+
+  .qbox{margin-top:16px;background:var(--ink);color:#fff;border-radius:6px;padding:24px 28px}
+  .qbox .ql{font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#FFDE59;margin-bottom:11px}
+  .qbox p{font-size:19px;font-weight:700;line-height:1.5;letter-spacing:-.02em}
+  .qbox p .u{border-bottom:2px solid #FFDE59;padding-bottom:1px}
+
+  .meth{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  .mt{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:16px 17px;box-shadow:var(--shadow)}
+  .mt .mn{font-size:10.5px;font-weight:800;color:var(--accent);letter-spacing:.06em;margin-bottom:7px}
+  .mt h4{font-size:14px;font-weight:800;letter-spacing:-.02em;margin-bottom:5px}
+  .mt p{font-size:13px;color:var(--ink2);line-height:1.5}
+
+  /* flip table */
+  .flip{border:1px solid var(--line);border-radius:4px;overflow:hidden;box-shadow:var(--shadow);margin-top:14px}
+  table{width:100%;border-collapse:collapse;font-size:13.5px;background:var(--card)}
+  th,td{padding:13px 15px;text-align:left;border-top:1px solid var(--line);vertical-align:top;line-height:1.55}
+  thead th{border-top:none;font-size:12px;font-weight:800;letter-spacing:.03em;background:var(--wash);color:var(--ink2)}
+  thead th.fix{background:var(--accent);color:#fff}
+  thead th.var{background:var(--coral);color:#fff}
+  tbody td:first-child{font-weight:800;color:var(--ink);font-size:12.5px;background:var(--wash);width:96px}
+  td.fix{background:var(--accent-soft);color:#A85200;font-weight:600}
+  td.var{background:var(--coral-soft);color:var(--coral-ink);font-weight:600}
+  .tbl{border:1px solid var(--line);border-radius:4px;overflow:hidden;box-shadow:var(--shadow)}
+  .tnote{font-size:12.5px;color:var(--mute);margin-top:9px;line-height:1.5}
+
+  .finding{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+  .fd{background:var(--blue-soft);border:1px solid #C2CFEA;border-radius:8px;padding:18px 20px}
+  .fd .fn{font-size:11px;font-weight:800;color:var(--blue);letter-spacing:.05em;margin-bottom:8px}
+  .fd p{font-size:13.5px;color:#1E3873;line-height:1.6;font-weight:600}
+  .fd p b{font-weight:800}
+
+  .metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .m{background:var(--card);border:1px solid var(--line);border-radius:6px;box-shadow:var(--shadow);padding:24px 21px}
+  .m .big{font-size:38px;font-weight:800;letter-spacing:-.04em;color:var(--accent);line-height:1.05;font-variant-numeric:tabular-nums}
+  .m .cap{font-size:13.5px;font-weight:700;color:var(--ink);margin-top:11px}
+  .m .cap span{display:block;font-size:12px;font-weight:500;color:var(--mute);margin-top:3px;line-height:1.45}
+
+  .take{background:var(--ink);color:#fff;border-radius:6px;padding:32px 34px;margin-top:16px}
+  .take .lbl{font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#FFDE59;margin-bottom:14px}
+  .take p{font-size:16.5px;line-height:1.72;color:#E6E3E9;font-weight:400}
+  .take p b{color:#fff;font-weight:700}
+
+  footer{margin-top:42px;text-align:center;font-size:12px;color:var(--mute);border-top:1px solid var(--line);padding-top:20px}
+
+  @media (max-width:760px){
+    body{padding:32px 18px 48px}
+    h1{font-size:29px}
+    .prow{grid-template-columns:1fr;gap:6px}
+    .meth,.finding,.metrics{grid-template-columns:1fr}
+    .cn + .cn{margin-left:0;margin-top:22px}
+    .cn + .cn::before{left:50%;top:-19px;transform:translateX(-50%) rotate(90deg)}
+    .chain{flex-direction:column}
+  }
+  @media print{body{background:#fff;padding:0}.card,.mt,.m,.tbl,.flip{box-shadow:none}section{break-inside:avoid}}
+
+  /* ── fastar : fixed-vs-variable axis ── */
+  .axis{margin-top:16px}
+  .axband{background:linear-gradient(120deg,#F5820A,#E06A00);color:#fff;border-radius:12px;padding:20px 24px;
+    display:flex;align-items:center;gap:16px;box-shadow:var(--shadow-green,0 10px 26px rgba(0,181,81,.24))}
+  .axband .axk{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;background:rgba(255,255,255,.2);
+    border-radius:6px;padding:5px 10px;white-space:nowrap}
+  .axband .axt{font-size:17px;font-weight:800;letter-spacing:-.02em;line-height:1.35}
+  .axband .axt small{display:block;font-size:12.5px;font-weight:500;opacity:.9;margin-top:3px}
+  .axsplit{display:flex;justify-content:center;gap:0;margin:0}
+  .axsplit::before{content:"";width:2px;height:22px;background:var(--line)}
+  .axkids{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  .axkid{background:var(--card);border:1px solid #F3C9BF;border-top:3px solid var(--coral);border-radius:10px;
+    padding:16px 17px;box-shadow:var(--shadow)}
+  .axkid .flag{font-size:22px;line-height:1}
+  .axkid .cn2{font-size:15px;font-weight:800;letter-spacing:-.02em;margin:8px 0 3px}
+  .axkid .vk{font-size:10px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--coral-ink);
+    background:var(--coral-soft);border-radius:5px;padding:3px 8px;display:inline-block;margin-bottom:9px}
+  .axkid p{font-size:12.5px;color:var(--ink2);line-height:1.55}
+  .axkid p b{color:var(--ink);font-weight:700}
+  @media(max-width:760px){.axkids{grid-template-columns:1fr}}
+
+  /* market cards */
+  .mkt{display:grid;grid-template-columns:repeat(3,1fr);gap:13px;margin-top:14px}
+  .mk{background:var(--card);border:1px solid var(--line);border-radius:10px;overflow:hidden;box-shadow:var(--shadow)}
+  .mk .mkh{display:flex;align-items:center;gap:9px;padding:14px 16px;background:var(--wash);border-bottom:1px solid var(--line)}
+  .mk .mkh .fl{font-size:20px;line-height:1}
+  .mk .mkh .nm{font-size:15px;font-weight:800;letter-spacing:-.02em}
+  .mk .mkr{padding:12px 16px;border-top:1px solid var(--line2,#F1F2F4)}
+  .mk .mkr:first-of-type{border-top:none}
+  .mk .mkr .rk{font-size:10px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--mute);margin-bottom:4px}
+  .mk .mkr .rv{font-size:12.8px;color:var(--ink2);line-height:1.5}
+  .mk .mkr .rv b{color:var(--ink);font-weight:700}
+  .mk .mkr.hl{background:var(--coral-soft)}
+  .mk .mkr.hl .rk{color:var(--coral-ink)}
+  .mk .mkr.hl .rv{color:var(--coral-ink);font-weight:600}
+  .mk .mkr.hl .rv b{color:#7A2413}
+  @media(max-width:760px){.mkt{grid-template-columns:1fr}}
+
+  /* 4 solutions 2x2 */
+  .sol4{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin-top:14px}
+  .sc{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px 20px;box-shadow:var(--shadow);position:relative}
+  .sc .sn{width:28px;height:28px;border-radius:8px;background:var(--coral);color:#fff;font-size:14px;font-weight:800;
+    display:flex;align-items:center;justify-content:center;margin-bottom:11px}
+  .sc h4{font-size:15.5px;font-weight:800;letter-spacing:-.02em;margin-bottom:6px;line-height:1.35}
+  .sc p{font-size:12.8px;color:var(--ink2);line-height:1.58}
+  .sc p b{color:var(--ink);font-weight:700}
+  .sc .ch{margin-top:10px;display:flex;flex-wrap:wrap;gap:5px}
+  .sc .ch span{font-size:10.5px;font-weight:700;background:var(--wash);color:var(--ink2);border-radius:5px;padding:3px 8px}
+  .sc .axtag{position:absolute;top:16px;right:16px;font-size:9.5px;font-weight:800;letter-spacing:.04em;padding:3px 8px;border-radius:5px}
+  .sc .axtag.fix{background:var(--accent-soft);color:#A85200}
+  .sc .axtag.var{background:var(--coral-soft);color:var(--coral-ink)}
+  @media(max-width:760px){.sol4{grid-template-columns:1fr}}
+
+  /* lifecycle */
+  .life{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:16px;border:1px solid var(--line);
+    border-radius:12px;overflow:hidden;box-shadow:var(--shadow)}
+  .lst{background:var(--card);padding:20px 20px;position:relative}
+  .lst + .lst{border-left:1px solid var(--line)}
+  .lst + .lst::before{content:"\2192";position:absolute;left:-11px;top:34px;width:22px;height:22px;background:#fff;
+    border:1px solid var(--line);border-radius:50%;color:var(--coral);font-weight:800;font-size:13px;
+    display:flex;align-items:center;justify-content:center;z-index:2}
+  .lst .ls{font-size:10.5px;font-weight:800;letter-spacing:.07em;color:var(--coral);text-transform:uppercase}
+  .lst h4{font-size:16px;font-weight:800;letter-spacing:-.02em;margin:7px 0 8px}
+  .lst ul{list-style:none;margin:0;padding:0}
+  .lst li{font-size:12.5px;color:var(--ink2);line-height:1.5;padding:6px 0 6px 15px;position:relative;border-top:1px solid var(--line2,#F1F2F4)}
+  .lst li:first-child{border-top:none}
+  .lst li::before{content:"";position:absolute;left:0;top:12px;width:5px;height:5px;border-radius:50%;background:var(--coral)}
+  .lst li b{color:var(--ink);font-weight:700}
+  @media(max-width:760px){.life{grid-template-columns:1fr}.lst + .lst{border-left:none;border-top:1px solid var(--line)}
+    .lst + .lst::before{left:50%;top:-11px;transform:translateX(-50%) rotate(90deg)}}
+
+  /* preferred-qualification callout */
+  .pref{margin-top:18px;background:var(--coral-soft);border:1px solid #F3C9BF;border-left:4px solid var(--coral);
+    border-radius:8px;padding:18px 22px}
+  .pref .pk{font-size:10.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--coral-ink);margin-bottom:7px}
+  .pref p{font-size:13.5px;color:#7A2413;line-height:1.62;font-weight:500}
+  .pref p b{color:var(--coral-ink);font-weight:800}
+</style>
+</head>
+<body>
+<div class="site-topbar">
+  <a href="index.html" class="stb-home">← 심소연 포트폴리오</a>
+  <span class="stb-title">Service Planning · Case Study</span>
+  <a href="index.html" class="stb-all">전체 케이스 보기</a>
+</div>
+<style>
+  .site-topbar{position:sticky;top:0;z-index:999;display:flex;align-items:center;gap:16px;
+    background:#141419;color:#fff;padding:12px 26px;font-family:'Pretendard','Apple SD Gothic Neo',sans-serif;
+    border-bottom:1px solid rgba(255,255,255,.12)}
+  .site-topbar .stb-home{color:#fff;text-decoration:none;font-size:14px;font-weight:700;letter-spacing:-.01em}
+  .site-topbar .stb-home:hover{color:#F5A623}
+  .site-topbar .stb-title{font-size:11.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#8A8792}
+  .site-topbar .stb-all{margin-left:auto;font-size:12.5px;font-weight:700;color:#141419;background:#fff;
+    text-decoration:none;padding:7px 15px;border-radius:7px;transition:opacity .15s}
+  .site-topbar .stb-all:hover{opacity:.85}
+  @media (max-width:600px){.site-topbar .stb-title{display:none}}
+</style>
+<div class="page">
+
+  <div class="mast">
+    <div class="eyebrow">Cross-border Sales · Localization <span class="gray">· 3개국</span></div>
+    <h1>하나의 브랜드, 세 개의 시장<br>K-pop 스타일링 글로벌 커머스</h1>
+    <p class="sub">국내 상품을 <b>대만·동남아·미국</b>에 판매하며, "무엇을 고정하고 무엇을 현지화할 것인가"를 정의한 프로젝트. <b>K-pop 스타일링</b>을 공통 축으로 고정하고, 각국의 <b>채널·트렌드·구매 맥락</b>을 변수로 두어 콘텐츠·광고를 현지화했습니다.</p>
+    <div class="meta">
+      <span><b>소속</b> 쏘영(SSOYOUNG) · 팀 4인(개발·디자인·운영·기획/마케팅)</span>
+      <span><b>기간</b> 2021 – 2022</span>
+      <span><b>역할</b> 기획 + 마케팅 (콘텐츠~판매 E2E · 현지화 정책)</span>
+    </div>
+    <div class="tags"><span># 크로스보더 판매</span><span># E2E 실행</span><span># 로컬라이징 정책</span><span># 채널 현지화</span><span># 콘텐츠·광고 운영</span><span># TikTok·라이브커머스</span></div>
+  </div>
+
+  <!-- 01 -->
+  <section>
+    <div class="slabel"><span class="n">01</span><h2>Situation · 배경</h2><span class="rule"></span></div>
+    <p class="lead">쏘영은 <b>K-pop 스타일 패션</b>을 다루는 커머스였습니다. 국내에서 검증된 상품과 스타일링을 <b>대만·동남아·미국</b>으로 확장하는 것이 목표였고, 저는 <b>4인 팀에서 기획과 마케팅</b>을 맡아 각 시장의 판매부터 운영까지를 담당했습니다.</p>
+    <div class="card">
+      <div class="prow"><div class="k">자산</div><div class="v">국내에서 반응이 검증된 <b>K-pop 스타일링 상품·룩</b> — 해외 한류 수요와 맞닿는 강력한 공통 자산</div></div>
+      <div class="prow"><div class="k">팀 구조</div><div class="v">개발·디자인·운영·기획/마케팅 <b>4인 소수 정예</b>. 시장별 대응을 얇게, 그러나 빠르게 돌려야 하는 조건</div></div>
+      <div class="prow"><div class="k">과제</div><div class="v">같은 상품을 <b>세 개의 다른 시장에 동시에</b> 성공적으로 안착시키기 — 단순 번역·복제로는 불가능</div></div>
+    </div>
+  </section>
+
+  <!-- 02 -->
+  <section>
+    <div class="slabel"><span class="n">02</span><h2>Complication · 문제 정의</h2><span class="rule"></span></div>
+    <p class="lead">가장 흔한 실패는 <b>국내 방식을 그대로 번역해 복제</b>하는 것입니다. 그러나 시장을 뜯어보니, 세 나라는 <b>상품을 만나는 채널도, 반응하는 트렌드도, 구매를 결정하는 맥락도</b> 모두 달랐습니다.</p>
+    <div class="chain">
+      <div class="cn">같은 상품을<br>그대로 번역·복제</div>
+      <div class="cn">채널·트렌드·<br>구매맥락 불일치</div>
+      <div class="cn">현지 고객에게<br>안 닿음</div>
+      <div class="cn end">전환 저조<br>판매 부진 위험</div>
+    </div>
+    <p class="body" style="margin-top:16px">그렇다고 나라마다 <b>전부 새로 만드는 것</b>은 4인 팀이 감당할 수 없었습니다. 문제는 "얼마나 현지화할 것인가"가 아니라, <b>"무엇을 고정하고 무엇을 현지화할 것인가"의 경계를 정하는 일</b>이었습니다.</p>
+    <div class="qbox">
+      <div class="ql">Key Question</div>
+      <p>세 시장을 동시에 공략하면서,<br><span class="u">무엇을 고정 축으로 두고 무엇을 현지화할 것인가?</span></p>
+    </div>
+  </section>
+
+  <!-- 03 -->
+  <section>
+    <div class="slabel"><span class="n">03</span><h2>Insight · 고정 축과 변수</h2><span class="rule"></span></div>
+    <p class="lead">답은 <b>브랜드의 정체성은 고정하고, 전달 방식은 현지화한다</b>였습니다. 세 시장을 관통하는 공통 수요는 <b>K-pop 스타일링</b> 그 자체였고, 달라지는 것은 그 스타일링을 <b>어떤 채널에서 어떤 트렌드의 옷을 입혀 전달하느냐</b>였습니다.</p>
+    <div class="axis">
+      <div class="axband">
+        <span class="axk">고정 축 · Fixed</span>
+        <div class="axt">K-pop 스타일링 아이덴티티
+          <small>상품·룩·브랜드 톤 — 세 시장 공통으로 유지하는 핵심 자산</small>
+        </div>
+      </div>
+      <div class="axsplit"></div>
+      <div class="axkids">
+        <div class="axkid">
+          <span class="flag">🇹🇼</span>
+          <div class="cn2">대만</div>
+          <span class="vk">변수 · 현지화</span>
+          <p>한류 수요가 두텁고 <b>정보 탐색이 꼼꼼</b> — 자사몰·마켓플레이스 중심, 상세한 사이즈·소재 정보</p>
+        </div>
+        <div class="axkid">
+          <span class="flag">🌏</span>
+          <div class="cn2">동남아</div>
+          <span class="vk">변수 · 현지화</span>
+          <p><b>숏폼·라이브커머스</b>가 구매 관문 — TikTok 스타일링 영상과 라이브 방송으로 발견-구매를 압축</p>
+        </div>
+        <div class="axkid">
+          <span class="flag">🇺🇸</span>
+          <div class="cn2">미국</div>
+          <span class="vk">변수 · 현지화</span>
+          <p><b>K-pop 팬덤·개성 표현</b>이 동력 — 영문 브랜딩과 유튜버 룩북으로 팬덤 커뮤니티에 침투</p>
+        </div>
+      </div>
+    </div>
+    <p class="body" style="margin-top:16px">이 경계를 정하자 실행이 단순해졌습니다. <b>고정 축(스타일링)</b>은 한 번 잘 만들어 세 시장이 공유하고, <b>변수(채널·트렌드·콘텐츠)</b>에만 팀의 자원을 집중하면 됐습니다. 4인 팀이 3개국을 동시에 운영할 수 있었던 이유입니다.</p>
+  </section>
+
+  <!-- 04 -->
+  <section>
+    <div class="slabel"><span class="n">04</span><h2>Localization · 시장별 현지화 설계</h2><span class="rule"></span></div>
+    <p class="lead">각 시장을 <b>채널 → 트렌드/구매맥락 → 현지화 포인트</b> 세 층위로 분석해, 무엇을 어떻게 바꿀지 시장별 플레이북으로 정리했습니다. 강조된 칸이 <b>현지화의 핵심 레버</b>입니다.</p>
+    <div class="mkt">
+      <div class="mk">
+        <div class="mkh"><span class="fl">🇹🇼</span><span class="nm">대만</span></div>
+        <div class="mkr"><div class="rk">채널</div><div class="rv">자사몰 · 현지 마켓플레이스</div></div>
+        <div class="mkr"><div class="rk">트렌드 · 맥락</div><div class="rv">한류 친숙 · <b>정교한 정보 탐색</b> 후 구매</div></div>
+        <div class="mkr hl"><div class="rk">현지화 레버</div><div class="rv">번체 중문 카피 · <b>상세 사이즈/소재 가이드</b> · 배송 신뢰 강화</div></div>
+      </div>
+      <div class="mk">
+        <div class="mkh"><span class="fl">🌏</span><span class="nm">동남아</span></div>
+        <div class="mkr"><div class="rk">채널</div><div class="rv">TikTok · 라이브커머스</div></div>
+        <div class="mkr"><div class="rk">트렌드 · 맥락</div><div class="rv"><b>숏폼으로 발견</b> · 라이브에서 즉시 구매</div></div>
+        <div class="mkr hl"><div class="rk">현지화 레버</div><div class="rv"><b>TikTok 스타일링 숏폼</b> · 라이브 방송 · 현지 결제/배송 대응</div></div>
+      </div>
+      <div class="mk">
+        <div class="mkh"><span class="fl">🇺🇸</span><span class="nm">미국</span></div>
+        <div class="mkr"><div class="rk">채널</div><div class="rv">자사몰 · 인스타/유튜브</div></div>
+        <div class="mkr"><div class="rk">트렌드 · 맥락</div><div class="rv"><b>K-pop 팬덤</b> · 개성/자기표현 소비</div></div>
+        <div class="mkr hl"><div class="rk">현지화 레버</div><div class="rv">영문 브랜딩 · <b>유튜버 협업 룩북</b> · 팬덤 커뮤니티 타깃</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05 -->
+  <section>
+    <div class="slabel"><span class="n">05</span><h2>Solution · 실행 설계</h2><span class="rule"></span></div>
+    <p class="lead">고정 축과 변수의 경계를 <b>네 개의 실행 과제</b>로 옮겼습니다. 하나(스타일링 큐레이션)는 <b>고정 자산</b>을 만드는 일이고, 나머지 셋은 그 자산을 <b>각 채널에 맞게 현지화</b>하는 일입니다.</p>
+    <div class="sol4">
+      <div class="sc">
+        <span class="axtag fix">고정 축</span>
+        <div class="sn">1</div>
+        <h4>스타일링 큐레이션</h4>
+        <p>상품을 낱개가 아니라 <b>K-pop 룩(코디) 단위로 큐레이션</b>. 세 시장이 공유하는 공통 콘텐츠 자산으로 제작해 재사용성을 극대화</p>
+        <div class="ch"><span>룩북 코디</span><span>테마 큐레이션</span><span>공통 자산</span></div>
+      </div>
+      <div class="sc">
+        <span class="axtag var">현지화</span>
+        <div class="sn">2</div>
+        <h4>채널별 현지화 콘텐츠</h4>
+        <p>같은 스타일링을 채널 문법에 맞게 변환 — 동남아는 <b>TikTok 숏폼·라이브</b>, 대만은 상세 정보형, 미국은 팬덤 감성으로 재편집</p>
+        <div class="ch"><span>TikTok 숏폼</span><span>라이브커머스</span><span>채널 최적화</span></div>
+      </div>
+      <div class="sc">
+        <span class="axtag var">현지화</span>
+        <div class="sn">3</div>
+        <h4>국내 유튜버 협업 룩북</h4>
+        <p>국내 인플루언서와 협업해 <b>착장 룩북</b>을 제작, 해외 K-pop 팬덤이 신뢰하는 "한국 스타일" 레퍼런스로 활용해 미국 시장에 침투</p>
+        <div class="ch"><span>인플루언서</span><span>룩북 제작</span><span>팬덤 신뢰</span></div>
+      </div>
+      <div class="sc">
+        <span class="axtag var">현지화</span>
+        <div class="sn">4</div>
+        <h4>채널별 타깃 광고</h4>
+        <p>시장·채널별로 <b>타깃과 크리에이티브를 분리 운영</b>. 콘텐츠 성과 데이터를 광고 소재로 환류시켜 전환 효율을 지속 개선</p>
+        <div class="ch"><span>타깃 분리</span><span>소재 A/B</span><span>성과 환류</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 06 -->
+  <section>
+    <div class="slabel"><span class="n">06</span><h2>Operating System · 진출 → 운영 → 정책화</h2><span class="rule"></span></div>
+    <p class="lead">일회성 판매가 아니라 <b>반복 가능한 운영 체계</b>로 만드는 것이 목표였습니다. 첫 시장에서 배운 것을 <b>현지화 정책으로 문서화</b>해, 다음 시장 진입 속도를 높이는 구조를 설계했습니다.</p>
+    <div class="life">
+      <div class="lst">
+        <div class="ls">Phase 1 · Entry</div>
+        <h4>진출</h4>
+        <ul>
+          <li>시장별 <b>채널·트렌드·구매맥락</b> 리서치</li>
+          <li>고정/현지화 <b>경계 정의</b> 및 우선순위</li>
+          <li>채널 오픈 · 초기 콘텐츠·광고 세팅</li>
+        </ul>
+      </div>
+      <div class="lst">
+        <div class="ls">Phase 2 · Operate</div>
+        <h4>운영</h4>
+        <ul>
+          <li>콘텐츠·광고 <b>성과 측정과 개선</b> 반복</li>
+          <li>잘 되는 소재·룩을 <b>다음 콘텐츠로 환류</b></li>
+          <li>채널별 이슈(결제·배송·CS) 대응</li>
+        </ul>
+      </div>
+      <div class="lst">
+        <div class="ls">Phase 3 · Policy</div>
+        <h4>정책화</h4>
+        <ul>
+          <li>시장별 <b>현지화 플레이북</b> 문서화</li>
+          <li>고정 자산 vs 현지화 항목 <b>표준 정리</b></li>
+          <li>다음 시장 진입 시 <b>재사용 가능한 기준</b>화</li>
+        </ul>
+      </div>
+    </div>
+    <div class="pref">
+      <div class="pk">진출 → 운영 → 정책화, 전 과정을 E2E로 실행하다</div>
+      <p>이 케이스는 <b>3개국 크로스보더 판매의 진출부터 운영, 로컬라이징 정책 수립까지의 전 과정</b>을 직접 경험한 사례입니다. 시장을 읽어 고정/현지화의 경계를 설계하고, 이를 <b>반복 가능한 정책으로 표준화</b>한 것이 이 프로젝트의 핵심입니다.</p>
+    </div>
+  </section>
+
+  <!-- 07 -->
+  <section>
+    <div class="slabel"><span class="n">07</span><h2>Results · 성과</h2><span class="rule"></span></div>
+    <p class="lead">고정 축을 공유하고 변수에만 집중한 전략으로, <b>4인 팀이 3개국에서 동시에 판매·운영</b>했습니다. 전환율은 업계 평균을 상회하는 수준으로 안착했습니다.</p>
+    <div class="metrics">
+      <div class="m"><div class="big">3개국</div><div class="cap">동시 판매·운영<span>대만 · 동남아 · 미국</span></div></div>
+      <div class="m"><div class="big">2%대</div><div class="cap">전환율<span>업계 평균(1%대 중반) 상회</span></div></div>
+      <div class="m"><div class="big">4인</div><div class="cap">팀으로 3개국 운영<span>고정 자산 재사용으로 자원 집중</span></div></div>
+    </div>
+    <div class="tnote">전환율은 운영 기간 중 확인된 수치로, 채널·시점에 따라 편차가 있으며 세부 수치는 비공개입니다.</div>
+    <div class="take">
+      <div class="lbl">번역이 아니라 경계 설계</div>
+      <p>글로벌 서비스의 성패는 "얼마나 많이 현지화하느냐"가 아니라 <b>"무엇을 고정하고 무엇을 현지화할지 그 경계를 어디에 긋느냐"</b>에 달려 있었습니다. 브랜드 정체성은 고정하고 전달 방식만 현지화하자, <b>작은 팀으로도 세 시장을 동시에 운영</b>할 수 있었고, 그 경계 정의 자체가 <b>다음 시장으로 확장되는 정책</b>이 되었습니다.</p>
+    </div>
+  </section>
+
+  <footer>K-pop 스타일링 글로벌 커머스 · 고정 축과 현지화 변수의 경계 설계 · 판매–운영–정책화 전 과정(세부 수치 비공개)</footer>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>쿠폰 투입 구조 재설계 — 케이스 스터디</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+<style>
+  :root{
+    --ink:#17161A; --ink2:#4A4751; --mute:#8C8893; --paper:#FCFBF9; --card:#FFFFFF;
+    --line:#E7E3DD; --accent:#F5820A; --accent-soft:#FFF4E3; --warn:#C0492E; --warn-soft:#FBEAE5;
+    --wash:#F4F1EC;
+    --shadow:0 1px 2px rgba(23,22,26,.03), 0 10px 30px rgba(23,22,26,.05);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Pretendard','Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:var(--ink);
+    background:var(--paper);line-height:1.65;letter-spacing:-.01em;-webkit-font-smoothing:antialiased;padding:48px 24px 64px;}
+  .page{max-width:900px;margin:0 auto}
+
+  .mast{border-top:3px solid var(--ink);padding-top:22px}
+  .eyebrow{display:flex;align-items:center;gap:10px;font-size:12px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--accent)}
+  .eyebrow .gray{color:var(--mute)}
+  h1{font-size:42px;font-weight:800;letter-spacing:-.035em;line-height:1.08;margin:18px 0 0}
+  .sub{font-size:17px;color:var(--ink2);margin-top:14px;font-weight:500;max-width:740px}
+  .meta{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:22px;padding-top:18px;border-top:1px solid var(--line);font-size:13px;color:var(--mute);font-weight:500}
+  .meta b{color:var(--ink2);font-weight:700}
+  .tags{margin-top:14px;display:flex;gap:8px;flex-wrap:wrap}
+  .tags span{font-size:11.5px;font-weight:600;color:var(--accent);background:var(--accent-soft);border-radius:999px;padding:5px 12px}
+
+  .exec{margin-top:26px;background:var(--ink);color:#fff;border-radius:8px;padding:26px 30px}
+  .exec .el{font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#B7AFF0;margin-bottom:16px}
+  .erow{display:grid;grid-template-columns:74px 1fr;gap:16px;padding:11px 0;border-top:1px solid rgba(255,255,255,.12)}
+  .erow:first-of-type{border-top:none;padding-top:0}
+  .erow .ek{font-size:12px;font-weight:800;color:#B7AFF0;letter-spacing:.04em;padding-top:2px}
+  .erow .ev{font-size:14.5px;color:#E6E3E9;line-height:1.6}
+  .erow .ev b{color:#fff;font-weight:700}
+
+  section{margin-top:48px}
+  .slabel{display:flex;align-items:center;gap:14px;margin-bottom:18px}
+  .slabel .n{font-size:12px;font-weight:800;color:var(--accent);letter-spacing:.05em}
+  .slabel h2{font-size:14px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--ink)}
+  .slabel .rule{flex:1;height:1px;background:var(--line)}
+  .lead{font-size:16px;color:var(--ink2);margin-bottom:18px;max-width:760px;line-height:1.72}
+  .lead b{color:var(--ink);font-weight:700}
+  p.body{font-size:14.5px;color:var(--ink2);line-height:1.75;margin-bottom:12px}
+  p.body:last-child{margin-bottom:0}
+  p.body b{color:var(--ink);font-weight:700}
+  h3.sh{font-size:17px;font-weight:800;margin:32px 0 10px;letter-spacing:-.025em}
+
+  .card{background:var(--card);border:1px solid var(--line);border-radius:6px;box-shadow:var(--shadow)}
+  .prow{display:grid;grid-template-columns:118px 1fr;gap:18px;padding:17px 26px;border-top:1px solid var(--line)}
+  .prow:first-child{border-top:none}
+  .prow .k{font-size:12.5px;font-weight:800;letter-spacing:.04em;color:var(--accent);padding-top:2px}
+  .prow .v{font-size:14.5px;color:var(--ink2);line-height:1.65}
+  .prow .v b{color:var(--ink);font-weight:700}
+
+  /* misallocation bar */
+  .alloc{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:24px 26px;box-shadow:var(--shadow);margin-top:16px}
+  .at{font-size:13px;font-weight:800;margin-bottom:18px}
+  .arow{display:flex;align-items:center;gap:14px;margin-bottom:13px}
+  .arow:last-of-type{margin-bottom:0}
+  .al{width:96px;font-size:12px;font-weight:800;color:var(--mute);flex:none;text-align:right}
+  .abar{flex:1;display:flex;height:32px;gap:3px}
+  .ab{display:flex;align-items:center;justify-content:center;font-size:11.5px;font-weight:700;border-radius:4px}
+  .ab.hi{background:var(--accent);color:#fff}
+  .ab.mid{background:#D5D1F0;color:#3F33A0}
+  .ab.lo{background:var(--wash);color:var(--mute);border:1px solid var(--line)}
+  .ab.bad{background:var(--warn);color:#fff}
+  .anote{margin-top:16px;padding-top:14px;border-top:1px solid var(--line);font-size:13px;color:var(--ink2);line-height:1.6}
+  .anote b{color:var(--warn);font-weight:800}
+
+  .chain{display:flex;align-items:stretch;flex-wrap:wrap;margin-top:18px}
+  .cn{flex:1;min-width:118px;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:14px 12px;
+    text-align:center;font-size:13px;font-weight:700;color:var(--ink2);line-height:1.4;box-shadow:var(--shadow);
+    display:flex;align-items:center;justify-content:center;position:relative}
+  .cn + .cn{margin-left:22px}
+  .cn + .cn::before{content:"\2192";position:absolute;left:-19px;top:50%;transform:translateY(-50%);color:#C6C1BA;font-weight:800;font-size:15px}
+  .cn.end{border-color:#E7B7AB;background:#FCEEEA;color:var(--warn)}
+
+  .qbox{margin-top:18px;background:var(--ink);color:#fff;border-radius:6px;padding:24px 28px}
+  .qbox .ql{font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#B7AFF0;margin-bottom:11px}
+  .qbox p{font-size:19px;font-weight:700;line-height:1.5;letter-spacing:-.02em}
+  .qbox p .u{border-bottom:2px solid #B7AFF0;padding-bottom:1px}
+
+  .hyp{background:var(--card);border:1px solid var(--line);border-radius:6px;box-shadow:var(--shadow);padding:24px 26px;margin-bottom:14px}
+  .hyp .top{display:flex;align-items:center;gap:11px;margin-bottom:10px}
+  .hyp .no{font-size:11px;font-weight:800;color:#fff;background:var(--accent);padding:4px 11px;border-radius:3px;letter-spacing:.04em}
+  .hyp .dom{font-size:12px;font-weight:700;color:var(--mute);letter-spacing:.04em}
+  .hyp h3{font-size:18.5px;font-weight:700;letter-spacing:-.025em;line-height:1.5}
+  .hyp h3 b{color:var(--accent);font-weight:800}
+  .hgrid{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);margin-top:17px}
+  .hgrid > div{padding:16px 18px 0;border-left:1px solid var(--line)}
+  .hgrid > div:first-child{border-left:none;padding-left:0}
+  .hgrid > div:last-child{padding-right:0}
+  .hgrid .lbl{display:block;font-size:10.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);margin-bottom:8px}
+  .hgrid p{font-size:13px;color:var(--ink2);line-height:1.62}
+  .hgrid p b{color:var(--ink);font-weight:700}
+  .hgrid .vf{color:var(--accent);font-weight:600}
+
+  .meth{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:16px}
+  .mt{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:16px 17px;box-shadow:var(--shadow)}
+  .mt .mn{font-size:10.5px;font-weight:800;color:var(--accent);letter-spacing:.06em;margin-bottom:7px}
+  .mt h4{font-size:14px;font-weight:800;letter-spacing:-.02em;margin-bottom:5px}
+  .mt p{font-size:12.5px;color:var(--ink2);line-height:1.5}
+
+  .finding{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:16px}
+  .fd{background:var(--accent-soft);border:1px solid #C9C3F0;border-radius:8px;padding:18px 20px}
+  .fd .fn{font-size:11px;font-weight:800;color:var(--accent);letter-spacing:.05em;margin-bottom:8px}
+  .fd p{font-size:13.5px;color:#3F33A0;line-height:1.62;font-weight:600}
+  .fd p b{font-weight:800}
+
+  /* tiers */
+  .tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:14px}
+  .tier{border-radius:8px;padding:16px 18px;font-size:13px;line-height:1.55}
+  .tier .tt{font-size:11px;font-weight:800;letter-spacing:.05em;display:block;margin-bottom:7px;text-transform:uppercase}
+  .tier .td{font-weight:700;font-size:14px;margin-bottom:5px}
+  .tier.hi{background:var(--accent-soft);border:1px solid #C9C3F0;color:#3F33A0} .tier.hi .tt{color:var(--accent)}
+  .tier.mid{background:var(--wash);border:1px solid var(--line);color:#5A5660} .tier.mid .tt{color:var(--mute)}
+  .tier.lo{background:var(--warn-soft);border:1px solid #E7B7AB;color:#9A3B24} .tier.lo .tt{color:var(--warn)}
+
+  /* COI */
+  .coi{display:grid;grid-template-columns:repeat(3,1fr);gap:13px;margin-top:14px}
+  .fac{background:var(--card);border:1px solid var(--line);border-radius:8px;box-shadow:var(--shadow);padding:19px 20px;border-top:3px solid var(--accent)}
+  .fac .ft{display:flex;align-items:baseline;justify-content:space-between;gap:8px}
+  .fac .fname{font-size:15.5px;font-weight:800;letter-spacing:-.02em}
+  .fac .fw{font-size:13px;font-weight:800;color:#fff;background:var(--accent);padding:3px 9px;border-radius:3px;flex:none;font-variant-numeric:tabular-nums}
+  .fac .fc{font-size:13px;color:var(--ink2);line-height:1.55;margin:11px 0 12px}
+  .fac .fm{font-size:11.5px;font-weight:700;color:var(--accent);background:var(--accent-soft);border-radius:6px;padding:6px 10px;display:inline-block}
+  .formula{margin-top:14px;background:var(--ink);color:#fff;border-radius:6px;padding:17px 22px;font-size:15px;font-weight:600;text-align:center}
+  .formula b{color:#B7AFF0;font-weight:800}
+  .formula .eq{color:#7E76A8;font-weight:800;margin:0 8px}
+
+  /* quadrant */
+  .quad-wrap{display:grid;grid-template-columns:26px 1fr;gap:12px;margin-top:14px}
+  .yaxis{writing-mode:vertical-rl;transform:rotate(180deg);text-align:center;font-size:11px;font-weight:800;
+    letter-spacing:.03em;color:var(--accent);align-self:center}
+  .quad{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .qcell{border-radius:8px;padding:18px 19px;border:1px solid var(--line);background:var(--card);box-shadow:var(--shadow)}
+  .qcell .tp{font-size:11px;font-weight:800;color:#fff;padding:3px 10px;border-radius:3px;display:inline-block;letter-spacing:.03em}
+  .qcell h4{font-size:16px;font-weight:800;margin:10px 0 7px;letter-spacing:-.02em}
+  .qcell .qd{font-size:12.5px;color:var(--ink2);line-height:1.55;margin-bottom:12px}
+  .qcell .fee{font-size:12.5px;font-weight:700;border-radius:6px;padding:9px 12px;line-height:1.5}
+  .qcell .fee b{font-weight:800}
+  .qA{border-color:#C9C3F0;background:var(--accent-soft)} .qA .tp{background:var(--accent)} .qA .fee{background:#fff;color:#3F33A0;border:1px solid #D5D0F2}
+  .qB .tp{background:#E0922A} .qB .fee{background:#FBEFD6;color:#9A6112}
+  .qC .tp{background:#9A96A1} .qC .fee{background:var(--wash);color:#5A5660}
+  .qD .tp{background:#3A4A5E} .qD .fee{background:#EDF0F3;color:#33424F}
+  .xaxis{grid-column:2;text-align:right;font-size:11px;font-weight:800;color:var(--accent);margin-top:7px;letter-spacing:.03em}
+
+  .tbl{border:1px solid var(--line);border-radius:4px;overflow:hidden;box-shadow:var(--shadow);margin-top:16px}
+  table{width:100%;border-collapse:collapse;font-size:13.5px;background:var(--card)}
+  th,td{padding:13px 15px;text-align:left;border-top:1px solid var(--line);vertical-align:top;line-height:1.6}
+  thead th{border-top:none;font-size:12px;font-weight:800;letter-spacing:.03em;background:var(--wash);color:var(--ink2)}
+  thead th.now{background:var(--accent);color:#fff}
+  tbody td:first-child{font-weight:800;color:var(--ink);font-size:12.5px;background:var(--wash);width:104px}
+  td.old{color:var(--mute);font-size:13px}
+  td.new{background:var(--accent-soft);color:#3F33A0;font-weight:700}
+  .tnote{font-size:12.5px;color:var(--mute);margin-top:10px;line-height:1.55}
+
+  .metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .m{background:var(--card);border:1px solid var(--line);border-radius:6px;box-shadow:var(--shadow);padding:24px 21px}
+  .m .big{font-size:34px;font-weight:800;letter-spacing:-.04em;color:var(--accent);line-height:1.12}
+  .m .cap{font-size:13.5px;font-weight:700;color:var(--ink);margin-top:11px}
+  .m .cap span{display:block;font-size:12px;font-weight:500;color:var(--mute);margin-top:3px;line-height:1.45}
+  .mband{margin-top:13px;background:var(--accent-soft);border:1px solid #C9C3F0;border-radius:8px;padding:15px 20px;
+    font-size:14px;font-weight:700;color:#3F33A0;line-height:1.6}
+  .mband b{font-weight:800}
+
+  .take{background:var(--ink);color:#fff;border-radius:6px;padding:32px 34px;margin-top:16px}
+  .take .lbl{font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#B7AFF0;margin-bottom:14px}
+  .take p{font-size:16.5px;line-height:1.75;color:#E6E3E9;font-weight:400}
+  .take p b{color:#fff;font-weight:700}
+
+  footer{margin-top:44px;text-align:center;font-size:12px;color:var(--mute);border-top:1px solid var(--line);padding-top:20px}
+
+  @media (max-width:780px){
+    body{padding:32px 18px 48px}
+    h1{font-size:29px}
+    .prow{grid-template-columns:1fr;gap:6px}
+    .finding,.coi,.tiers,.metrics,.quad{grid-template-columns:1fr}
+    .meth{grid-template-columns:1fr 1fr}
+    .hgrid{grid-template-columns:1fr}
+    .hgrid > div{border-left:none;border-top:1px solid var(--line);padding-left:0;padding-top:14px}
+    .hgrid > div:first-child{border-top:none}
+    .erow{grid-template-columns:1fr;gap:4px}
+    .yaxis{writing-mode:horizontal-tb;transform:none}
+    .cn + .cn{margin-left:0;margin-top:22px}
+    .cn + .cn::before{left:50%;top:-19px;transform:translateX(-50%) rotate(90deg)}
+    .chain{flex-direction:column}
+    .al{width:74px;font-size:11px}
+  }
+  @media print{body{background:#fff;padding:0}.card,.hyp,.mt,.m,.fac,.qcell,.tbl,.alloc{box-shadow:none}section{break-inside:avoid}}
+</style>
+</head>
+<body>
+<div class="site-topbar">
+  <a href="index.html" class="stb-home">← 심소연 포트폴리오</a>
+  <span class="stb-title">Service Planning · Case Study</span>
+  <a href="index.html" class="stb-all">전체 케이스 보기</a>
+</div>
+<style>
+  .site-topbar{position:sticky;top:0;z-index:999;display:flex;align-items:center;gap:16px;
+    background:#141419;color:#fff;padding:12px 26px;font-family:'Pretendard','Apple SD Gothic Neo',sans-serif;
+    border-bottom:1px solid rgba(255,255,255,.12)}
+  .site-topbar .stb-home{color:#fff;text-decoration:none;font-size:14px;font-weight:700;letter-spacing:-.01em}
+  .site-topbar .stb-home:hover{color:#F5A623}
+  .site-topbar .stb-title{font-size:11.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#8A8792}
+  .site-topbar .stb-all{margin-left:auto;font-size:12.5px;font-weight:700;color:#141419;background:#fff;
+    text-decoration:none;padding:7px 15px;border-radius:7px;transition:opacity .15s}
+  .site-topbar .stb-all:hover{opacity:.85}
+  @media (max-width:600px){.site-topbar .stb-title{display:none}}
+</style>
+<div class="page">
+
+  <div class="mast">
+    <div class="eyebrow">Strategy · Profitability <span class="gray">· 온라인 MD</span></div>
+    <h1>쿠폰 투입 구조 재설계<br>비용에서 투자로</h1>
+    <p class="sub">모든 브랜드에 동일하게 적용되던 쿠폰 정책을, <b>브랜드별 반응성과 생애가치를 반영한 종합 지수(COI)</b> 기반으로 전환해 <b>매출 규모를 유지하면서 수익성을 개선</b>한 손익 구조 프로젝트</p>
+    <div class="meta">
+      <span><b>소속</b> 아동 패션 플랫폼 · 온라인 MD</span>
+      <span><b>기간</b> 2025.12 – 2026.03</span>
+      <span><b>기여도</b> 50%</span>
+    </div>
+    <div class="tags"><span># 손익 구조 분석</span><span># 데이터 스코어링</span><span># 프로모션 정책 설계</span><span># 예산 재배분</span></div>
+  </div>
+
+  <div class="exec">
+    <div class="el">Executive Summary</div>
+    <div class="erow"><div class="ek">과제</div><div class="ev">카테고리 특성을 반영하지 않은 <b>일괄 쿠폰 정책</b>으로 저마진 구간에서 <b>역마진</b>이 발생하고, 고효율 구간은 오히려 <b>지원 부족</b>으로 성장 기회를 놓치는 상황</div></div>
+    <div class="erow"><div class="ek">접근</div><div class="ev">쿠폰비를 <b>일괄 비용이 아닌 브랜드별 투자</b>로 재정의 → 최근 1년 데이터로 효율 구간을 등급화하고, <b>3개 지표 가중 합산 지수(COI)</b>로 브랜드를 4개 세그먼트로 분류해 지급 방식을 자동 결정</div></div>
+    <div class="erow"><div class="ek">결과</div><div class="ev">수수료 대비 매출 <b>ROI 약 20% 개선</b> · <b>매출 규모는 유지</b>한 채 낭비 비용 절감 · 전사 영업이익률 향상에 기여 · 지속 가능한 <b>투입 우선순위 로직 정립</b></div></div>
+  </div>
+
+  <!-- 01 -->
+  <section>
+    <div class="slabel"><span class="n">01</span><h2>Situation · 배경</h2><span class="rule"></span></div>
+    <p class="lead">온라인 커머스에서 쿠폰은 <b>가장 빠르게 매출을 움직이는 수단</b>이자, <b>가장 통제하기 어려운 비용</b>입니다. 플랫폼 간 경쟁이 심화될수록 쿠폰 의존도는 높아지지만, 그 효과는 브랜드마다 크게 다릅니다.</p>
+    <div class="card">
+      <div class="prow"><div class="k">운영 방식</div><div class="v">쿠폰은 <b>전 브랜드·전 카테고리에 동일한 기준</b>으로 지급되고 있었음 — 가격대와 마진 구조가 전혀 다른 상품군에 같은 정책 적용</div></div>
+      <div class="prow"><div class="k">관리 방식</div><div class="v">쿠폰비는 <b>사후 정산되는 판촉비</b>로만 관리되어, 어떤 브랜드에서 얼마의 수익을 만들었는지 <b>사전에 판단할 근거가 없음</b></div></div>
+      <div class="prow"><div class="k">문제 인식</div><div class="v">매출은 늘어도 <b>이익이 따라오지 않는</b> 구간이 존재한다는 정황이 반복 관찰됨</div></div>
+    </div>
+  </section>
+
+  <!-- 02 -->
+  <section>
+    <div class="slabel"><span class="n">02</span><h2>Complication · 문제 정의</h2><span class="rule"></span></div>
+    <p class="lead">최근 1년 데이터를 열어보니, 문제는 <b>쿠폰을 너무 많이 쓴 것</b>이 아니라 <b>잘못된 곳에 쓴 것</b>이었습니다. 비용의 총액이 아니라 <b>배분</b>이 문제였습니다.</p>
+    <div class="alloc">
+      <div class="at">쿠폰비 배분과 수익 기여의 불일치</div>
+      <div class="arow">
+        <span class="al">쿠폰비 투입</span>
+        <span class="abar">
+          <span class="ab bad" style="width:45%">저마진 · 저효율 구간</span>
+          <span class="ab mid" style="width:30%">중간</span>
+          <span class="ab lo" style="width:25%">고효율 구간</span>
+        </span>
+      </div>
+      <div class="arow">
+        <span class="al">수익 기여</span>
+        <span class="abar">
+          <span class="ab lo" style="width:20%">저조</span>
+          <span class="ab mid" style="width:28%">중간</span>
+          <span class="ab hi" style="width:52%">고효율 구간</span>
+        </span>
+      </div>
+      <div class="anote">투입이 많은 구간과 수익을 만드는 구간이 <b>서로 어긋나 있었습니다.</b> 저마진 카테고리에 쿠폰이 집중되며 <b>역마진 구간이 발생</b>했고, 정작 잘 반응하는 구간은 지원이 부족해 <b>성장 기회비용</b>이 발생했습니다. <span style="font-size:11.5px;color:var(--mute);font-weight:600">※ 도식은 구조를 나타내며, 실제 비율은 비공개</span></div>
+    </div>
+    <div class="chain">
+      <div class="cn">일괄 쿠폰 정책</div>
+      <div class="cn">브랜드별 반응성<br>차이 미반영</div>
+      <div class="cn">저효율 구간에<br>비용 집중</div>
+      <div class="cn end">매출은 유지<br>이익은 훼손</div>
+    </div>
+    <div class="qbox">
+      <div class="ql">Key Question</div>
+      <p>쿠폰 총액을 줄이지 않고,<br><span class="u">배분만 바꿔서 수익성을 개선할 수 있는가?</span></p>
+    </div>
+  </section>
+
+  <!-- 03 -->
+  <section>
+    <div class="slabel"><span class="n">03</span><h2>Hypothesis · 가설 수립</h2><span class="rule"></span></div>
+    <p class="lead">"어디에 얼마를 줘야 하는가"에 답하기 위해, <b>쿠폰이 수익을 만드는 경로</b>를 세 갈래로 분해했습니다.</p>
+
+    <div class="hyp">
+      <div class="top"><span class="no">가설 1</span><span class="dom">반응성</span></div>
+      <h3>같은 할인율이라도 <b>브랜드마다 매출 반응은 전혀 다르며</b>, 이 차이는 사전에 측정 가능하다</h3>
+      <div class="hgrid">
+        <div><span class="lbl">근거</span><p>가격 민감도는 브랜드의 <b>대체재 유무·구매 주기·고객 성향</b>에 따라 달라짐. 반응이 큰 브랜드에 같은 비용을 쓰면 <b>훨씬 큰 매출</b>이 발생</p></div>
+        <div><span class="lbl">함의</span><p>사실이라면 쿠폰은 <b>공평하게 나눌 것이 아니라 반응성이 높은 곳에 집중</b>해야 하는 투자 자원</p></div>
+        <div><span class="lbl">검증 방식</span><p class="vf">과거 할인 적용 시점 전후의 <b>매출 변화율을 브랜드별로 산출</b>해 탄력성 지표화</p></div>
+      </div>
+    </div>
+
+    <div class="hyp">
+      <div class="top"><span class="no">가설 2</span><span class="dom">전환 갭</span></div>
+      <h3>쿠폰이 가장 필요한 곳은 잘 팔리는 브랜드가 아니라, <b>가격 때문에 전환이 막힌 브랜드</b>다</h3>
+      <div class="hgrid">
+        <div><span class="lbl">근거</span><p>유입과 찜은 많은데 구매로 이어지지 않는 브랜드는 <b>수요는 이미 확인됐고 가격만 걸린</b> 상태. 쿠폰이 병목을 정확히 해소</p></div>
+        <div><span class="lbl">함의</span><p>이미 잘 팔리는 곳에 주는 쿠폰은 <b>일어날 매출을 할인해주는 것</b>에 불과 — 전환 갭이 큰 곳이 진짜 기회</p></div>
+        <div><span class="lbl">검증 방식</span><p class="vf">브랜드별 <b>유입·찜 대비 구매 전환율의 격차</b>를 산출해 가격 허들 구간 식별</p></div>
+      </div>
+    </div>
+
+    <div class="hyp">
+      <div class="top"><span class="no">가설 3</span><span class="dom">생애가치</span></div>
+      <h3>쿠폰의 성과는 <b>당월 매출이 아니라 재구매로 평가</b>해야 한다</h3>
+      <div class="hgrid">
+        <div><span class="lbl">근거</span><p>첫 구매 이후 <b>재구매 주기가 짧고 빈도가 높은 브랜드</b>는, 한 번의 쿠폰이 여러 번의 정가 구매로 회수됨</p></div>
+        <div><span class="lbl">함의</span><p>단기 ROI만 보면 <b>락인 효과가 큰 브랜드에 과소 투자</b>하게 됨 — 첫 구매와 재구매를 분리해 설계해야 함</p></div>
+        <div><span class="lbl">검증 방식</span><p class="vf">브랜드별 <b>재구매 주기·연간 구매 빈도</b>를 분석해 생애가치 기여도 산출</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 -->
+  <section>
+    <div class="slabel"><span class="n">04</span><h2>Validation · 검증</h2><span class="rule"></span></div>
+    <p class="lead">최근 1년 <b>셀·카테고리별 수수료 매출 대비 쿠폰비 비율</b>을 전수 추출해, 마진율과 ROI를 기준으로 구간을 나눠 검증했습니다.</p>
+    <div class="meth">
+      <div class="mt"><div class="mn">M1</div><h4>투입 대비 수익 분석</h4><p>셀·카테고리별 쿠폰비 비율과 수수료 매출을 대조해 역마진 구간 특정</p></div>
+      <div class="mt"><div class="mn">M2</div><h4>할인 탄력성 측정</h4><p>할인 적용 전후 매출 변화율을 브랜드별로 산출</p></div>
+      <div class="mt"><div class="mn">M3</div><h4>전환 갭 분석</h4><p>유입·찜 대비 구매 전환율 격차로 가격 허들 브랜드 식별</p></div>
+      <div class="mt"><div class="mn">M4</div><h4>재구매 분석</h4><p>재구매 주기와 연간 구매 빈도로 생애가치 기여 측정</p></div>
+    </div>
+    <div class="finding">
+      <div class="fd">
+        <div class="fn">검증 결과 · 가설 1 &amp; 2</div>
+        <p>할인 탄력성은 브랜드 간 편차가 컸고, <b>탄력성이 낮은 브랜드에 상당한 쿠폰비가 투입</b>되고 있었음. 반대로 전환 갭이 큰 브랜드는 <b>지원이 거의 없는 상태</b>로 방치 → <b>성립</b></p>
+      </div>
+      <div class="fd">
+        <div class="fn">검증 결과 · 가설 3</div>
+        <p>재구매 주기가 짧은 브랜드는 <b>첫 구매 쿠폰의 회수 기간이 현저히 짧았음</b>. 단기 ROI 기준으로는 포착되지 않던 구간 → <b>성립</b></p>
+      </div>
+    </div>
+
+    <h3 class="sh">1차 산출 — 효율 3등급</h3>
+    <p class="body">마진율과 ROI를 기준으로 전 구간을 세 등급으로 나눠, <b>운용 방향의 큰 틀</b>을 먼저 확정했습니다.</p>
+    <div class="tiers">
+      <div class="tier hi"><span class="tt">고효율</span><div class="td">지원 확대</div>쿠폰 지원 범위를 넓혀 점유율 극대화 유도</div>
+      <div class="tier mid"><span class="tt">유지</span><div class="td">현행 운용</div>기존 수준을 유지하며 변화 관찰</div>
+      <div class="tier lo"><span class="tt">저효율</span><div class="td">축소 · 조건 강화</div>할인율을 낮추고 적용 조건을 강화해 손익 방어</div>
+    </div>
+  </section>
+
+  <!-- 05 -->
+  <section>
+    <div class="slabel"><span class="n">05</span><h2>Solution · 종합 지수와 지급 매트릭스</h2><span class="rule"></span></div>
+    <p class="lead">3등급 구분만으로는 <b>"얼마를, 어떤 방식으로"</b>에 답할 수 없었습니다. 검증된 세 지표를 가중 합산한 <b>종합 지수(COI)</b>를 만들어, 브랜드를 4개 세그먼트로 분류하고 <b>지급 방식이 자동 결정</b>되도록 설계했습니다.</p>
+    <div class="coi">
+      <div class="fac">
+        <div class="ft"><span class="fname">① 할인 탄력성</span><span class="fw">40%</span></div>
+        <div class="fc">쿠폰을 붙였을 때 매출 반응이 큰 브랜드일수록 고점</div>
+        <span class="fm">쿠폰 효율 · ROI</span>
+      </div>
+      <div class="fac">
+        <div class="ft"><span class="fname">② 전환 갭</span><span class="fw">30%</span></div>
+        <div class="fc">유입·찜은 높은데 구매 전환이 낮아 가격 허들이 확인되는 브랜드</div>
+        <span class="fm">전환 개선 기회</span>
+      </div>
+      <div class="fac">
+        <div class="ft"><span class="fname">③ 생애가치 기여</span><span class="fw">30%</span></div>
+        <div class="fc">첫 구매 후 재구매 주기가 짧고 연간 구매 빈도가 높은 브랜드</div>
+        <span class="fm">장기 락인 효과</span>
+      </div>
+    </div>
+    <div class="formula">COI <span class="eq">=</span> <b>0.40</b> · 할인 탄력성 <span class="eq">+</span> <b>0.30</b> · 전환 갭 <span class="eq">+</span> <b>0.30</b> · 생애가치 기여</div>
+    <div class="tnote">가중치는 <b>쿠폰의 1차 목적이 즉각적 매출 전환</b>이라는 점을 반영해 탄력성에 가장 높은 비중을 두되, 단기 성과만으로 편향되지 않도록 전환 기회와 장기 가치에 동일 비중을 배분했습니다.</div>
+
+    <h3 class="sh">4개 세그먼트별 지급 설계</h3>
+    <div class="quad-wrap">
+      <div class="yaxis">할인 탄력성 · 전환 갭 ▲</div>
+      <div class="quad">
+        <div class="qcell qB">
+          <span class="tp">Type B</span>
+          <h4>효율 극대화형</h4>
+          <div class="qd">관심도가 높고 할인 시 매출이 크게 반응하는 브랜드. 단기 성과를 만드는 구간</div>
+          <div class="fee">쿠폰비 <b>상향</b> · 브랜드와 <b>분담 구조</b>로 운영해 플랫폼 부담 완화</div>
+        </div>
+        <div class="qcell qA">
+          <span class="tp">Type A · 최고 점수</span>
+          <h4>전략적 락인형</h4>
+          <div class="qd">재구매가 높고 쿠폰에 즉시 반응하는 핵심 브랜드. 투자 우선순위 1순위</div>
+          <div class="fee">쿠폰비 <b>유연 지원</b> · <b>첫 구매에 집중 배분하고 재구매는 최소화</b>해 회수</div>
+        </div>
+        <div class="qcell qC">
+          <span class="tp">Type C</span>
+          <h4>성장 정체형</h4>
+          <div class="qd">관심도가 낮고 할인에도 반응이 미미한 브랜드. 쿠폰으로 해결되지 않는 구간</div>
+          <div class="fee">쿠폰비 <b>기본 유지</b> · 해법은 할인이 아니라 <b>상품 라인업 재정비</b></div>
+        </div>
+        <div class="qcell qD">
+          <span class="tp">Type D</span>
+          <h4>프리미엄 브랜딩형</h4>
+          <div class="qd">쿠폰 유무와 무관하게 구매가 발생하는 하이엔드 브랜드</div>
+          <div class="fee">쿠폰비 <b>과감히 축소</b> · 전용 기획전·매거진 노출 등 <b>비가격 지원으로 대체</b></div>
+        </div>
+        <div class="xaxis">재구매 · 생애가치 ▶</div>
+      </div>
+    </div>
+
+    <h3 class="sh">의사결정 프로세스로의 반영</h3>
+    <p class="body">모델을 분석 리포트로 끝내지 않고, <b>사업부별 쿠폰 예산 재배분의 근거</b>로 사용했습니다. 세그먼트가 곧 지급 방식이므로, <b>브랜드별 협의가 아니라 등급에 따라 조건이 결정</b>되는 구조가 됐습니다.</p>
+    <div class="tbl">
+      <table>
+        <thead><tr><th>구분</th><th>개선 전</th><th class="now">개선 후</th></tr></thead>
+        <tbody>
+          <tr><td>지급 기준</td><td class="old">전 브랜드 일괄 적용</td><td class="new">COI 등급에 따른 <b>차등 지급</b></td></tr>
+          <tr><td>판단 근거</td><td class="old">사후 정산된 판촉비로만 확인</td><td class="new">투입 전 <b>반응성·전환 갭·생애가치</b>로 사전 판단</td></tr>
+          <tr><td>협의 방식</td><td class="old">브랜드별 개별 협상</td><td class="new">등급별 <b>표준 조건</b> 제시로 협상 비용 축소</td></tr>
+          <tr><td>예산 운용</td><td class="old">전년 기준 관성적 배분</td><td class="new">등급 기반 <b>사업부별 예산 재배분</b> 실행</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 06 -->
+  <section>
+    <div class="slabel"><span class="n">06</span><h2>Results · 성과</h2><span class="rule"></span></div>
+    <div class="metrics">
+      <div class="m"><div class="big">+20%</div><div class="cap">수수료 대비 매출 ROI<span>쿠폰 투입 효율 개선</span></div></div>
+      <div class="m"><div class="big">매출 유지</div><div class="cap">규모는 지키고 비용은 절감<span>낭비 구간 제거 · 영업이익률 향상 기여</span></div></div>
+      <div class="m"><div class="big">로직화</div><div class="cap">투입 우선순위 정립<span>일회성 대응 → 상시 관리 체계</span></div></div>
+    </div>
+    <div class="mband">가장 큰 변화는 <b>쿠폰 논의의 언어가 바뀐 것</b> — "얼마나 줄까"에서 <b>"어느 등급에 어떤 방식으로 줄까"</b>로</div>
+    <div class="take">
+      <div class="lbl">비용을 줄이지 않고 수익을 만들다</div>
+      <p>이 프로젝트의 핵심은 <b>쿠폰비를 삭감하지 않았다</b>는 점입니다. 총액을 건드리는 대신 <b>배분의 기준을 바꿨고</b>, 그 결과 매출 규모를 유지하면서 수익성을 개선했습니다. 쿠폰을 <b>사후에 정산하는 비용이 아니라, 사전에 배분하는 투자</b>로 재정의한 것이 전환점이었습니다.</p>
+    </div>
+  </section>
+
+  <footer>쿠폰 투입 구조 재설계 — 종합 지수 기반 차등 운용 체계</footer>
+
+</div>
+</body>
+</html>

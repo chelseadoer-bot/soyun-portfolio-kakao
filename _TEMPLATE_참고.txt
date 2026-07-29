@@ -1,0 +1,53 @@
+<!-- ===================================================== -->
+<!-- ai-agent.html / fastar.html 만들 때 이 골격을 쓰세요      -->
+<!-- spao.html을 복사해서 내용만 바꾸는 게 가장 빠릅니다        -->
+<!-- ===================================================== -->
+
+=== [1] <head> 안에 들어갈 폰트 + 스타일 ===
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+<style>
+  .site-topbar{position:sticky;top:0;z-index:999;display:flex;align-items:center;gap:16px;
+    background:#141419;color:#fff;padding:12px 26px;font-family:'Pretendard','Apple SD Gothic Neo',sans-serif;
+    border-bottom:1px solid rgba(255,255,255,.12)}
+  .site-topbar .stb-home{color:#fff;text-decoration:none;font-size:14px;font-weight:700;letter-spacing:-.01em}
+  .site-topbar .stb-home:hover{color:#F5A623}
+  .site-topbar .stb-title{font-size:11.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#8A8792}
+  .site-topbar .stb-all{margin-left:auto;font-size:12.5px;font-weight:700;color:#141419;background:#fff;
+    text-decoration:none;padding:7px 15px;border-radius:7px;transition:opacity .15s}
+  .site-topbar .stb-all:hover{opacity:.85}
+  @media (max-width:600px){.site-topbar .stb-title{display:none}}
+</style>
+
+=== [2] <body> 바로 다음에 넣을 상단 네비 ===
+<div class="site-topbar">
+  <a href="index.html" class="stb-home">← 심소연 포트폴리오</a>
+  <span class="stb-title">Service Planning · Case Study</span>
+  <a href="index.html" class="stb-all">전체 케이스 보기</a>
+</div>
+<style>
+  .site-topbar{position:sticky;top:0;z-index:999;display:flex;align-items:center;gap:16px;
+    background:#141419;color:#fff;padding:12px 26px;font-family:'Pretendard','Apple SD Gothic Neo',sans-serif;
+    border-bottom:1px solid rgba(255,255,255,.12)}
+  .site-topbar .stb-home{color:#fff;text-decoration:none;font-size:14px;font-weight:700;letter-spacing:-.01em}
+  .site-topbar .stb-home:hover{color:#F5A623}
+  .site-topbar .stb-title{font-size:11.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#8A8792}
+  .site-topbar .stb-all{margin-left:auto;font-size:12.5px;font-weight:700;color:#141419;background:#fff;
+    text-decoration:none;padding:7px 15px;border-radius:7px;transition:opacity .15s}
+  .site-topbar .stb-all:hover{opacity:.85}
+  @media (max-width:600px){.site-topbar .stb-title{display:none}}
+</style>
+
+=== [3] 본문 골격 (spao.html 참고) ===
+<div class="page">
+  <div class="mast">
+    <div class="eyebrow">GENRE · 소속 <span class="gray">· 팀/조직</span></div>
+    <h1>케이스 제목<br>두 줄 가능</h1>
+    <p class="sub">한 줄 요약 설명</p>
+    <div class="meta">
+      <span><b>소속</b> ...</span>
+      <span><b>기간</b> ...</span>
+      <span><b>역할</b> ...</span>
+    </div>
+  </div>
+  <!-- Problem / Hypothesis / Solution / Results 섹션들 -->
+</div>
