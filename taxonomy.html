@@ -143,12 +143,12 @@
 <div class="page">
 
   <div class="mast">
-    <div class="eyebrow">AI Chat Search <span class="gray">· 키디키디</span></div>
+    <div class="eyebrow">Data Infrastructure <span class="gray">· 키디키디</span></div>
     <h1>키디키디 AI 챗 검색을 위한<br>상품 데이터 인프라 설계</h1>
     <p class="sub">키디키디 내 <b>AI 챗 검색</b>을 구축하는 전체 프로젝트 중, 자연어 질의를 상품에 연결하는 <b>메타태그 택소노미 · 자동 태깅 · 브랜드 컨셉 클러스터링</b>을 설계한 데이터 인프라 파트</p>
     <div class="meta">
-      <span><b>전체 프로젝트</b> 키디키디 내 AI 챗 검색</span>
-      <span><b>본 문서 범위</b> 검색을 떠받치는 상품 데이터 인프라</span>
+      <span><b>소속</b> 이랜드 그룹 온라인 · 키디키디</span>
+      <span><b>기간</b> 2025</span>
       <span><b>역할</b> 태그 택소노미 · 태깅 파이프라인 · 브랜드 클러스터링</span>
     </div>
     <div class="tags"><span># AI 챗 검색</span><span># 태그 택소노미 설계</span><span># LLM 딥리서치 파이프라인</span><span># BM25 + Dense 검색</span><span># 브랜드 클러스터링</span></div>
@@ -182,8 +182,8 @@
     <div class="slabel"><span class="n">02</span><h2>Taxonomy · 태그 분류체계</h2><span class="rule"></span></div>
     <p style="font-size:15px;color:var(--ink2);margin-bottom:16px;max-width:720px">새 모델에 얹힐 수 있도록 <b style="color:var(--ink)">Pillar – Dimension – Tag – 유사어</b>의 계층 구조로 단순화해 설계.</p>
     <div class="cascade">
-      <div class="tier"><div class="lv">Pillar</div><div class="num">12</div><div class="nm">최상위 축</div><div class="ex">예: TPO</div></div>
-      <div class="tier"><div class="lv">Dimension</div><div class="num">44</div><div class="nm">세부 차원</div><div class="ex">계절·활동 / 선물맥락 / 일상·기관 / 행사·기념일</div></div>
+      <div class="tier"><div class="lv">Pillar</div><div class="num">11</div><div class="nm">최상위 축</div><div class="ex">예: TPO</div></div>
+      <div class="tier"><div class="lv">Dimension</div><div class="num">39</div><div class="nm">세부 차원</div><div class="ex">계절·활동 / 선물맥락 / 일상·기관 / 행사·기념일</div></div>
       <div class="tier"><div class="lv">Tag</div><div class="num">2,811</div><div class="nm">키워드 태그</div><div class="ex">브랜드 607 제외 시 2,204</div></div>
       <div class="tier"><div class="lv">유사어</div><div class="num">10,112</div><div class="nm">동의어 사전</div><div class="ex">클렌징 검토 대상</div></div>
     </div>
@@ -225,7 +225,7 @@
   <section>
     <div class="slabel"><span class="n">05</span><h2>Results · 구축 규모</h2><span class="rule"></span></div>
     <div class="metrics">
-      <div class="m"><div class="big">12 · 44</div><div class="cap">Pillar · Dimension<span>계층 축 설계</span></div></div>
+      <div class="m"><div class="big">11 · 39</div><div class="cap">Pillar · Dimension<span>계층 축 설계</span></div></div>
       <div class="m"><div class="big">2,811</div><div class="cap">Tag<span>브랜드 제외 2,204</span></div></div>
       <div class="m"><div class="big">10,112</div><div class="cap">유사어 사전<span>BM25+Dense 매칭</span></div></div>
       <div class="m"><div class="big">404 · 647</div><div class="cap">브랜드 컨셉 · 태그<span>13개 컨셉 × 남녀</span></div></div>
