@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Soyun Shim — Resume · Technology Strategy</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+<style>
+  :root{
+    --ink:#17161A; --ink2:#40404A; --mute:#77767F; --line:#E6E5E0;
+    --accent:#F5820A; --accent-ink:#B45A00; --yellow:#FEE500; --wash:#FAFAF7;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Pretendard','Apple SD Gothic Neo',sans-serif;color:var(--ink);background:#EDEDEA;
+    line-height:1.55;letter-spacing:-.01em;-webkit-font-smoothing:antialiased;padding:28px 16px}
+  .sheet{max-width:820px;margin:0 auto;background:#fff;padding:44px 48px 40px;
+    box-shadow:0 4px 24px rgba(0,0,0,.08);border-radius:6px}
+
+  /* header */
+  .hd{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;
+    padding-bottom:16px;border-bottom:3px solid var(--ink)}
+  .hd .hleft{display:flex;gap:18px;align-items:center}
+  .photo{width:104px;height:104px;border-radius:50%;overflow:hidden;flex:none;position:relative;border:1px solid var(--line);background:var(--wash)}
+  .photo img{width:100%;height:100%;object-fit:cover;display:block}
+  .hd .name{font-size:31px;font-weight:800;letter-spacing:-.02em;line-height:1}
+  .hd .name .en{font-size:14px;font-weight:600;color:var(--mute);margin-left:9px;letter-spacing:.02em}
+  .hd .role{font-size:13.5px;font-weight:700;color:var(--accent-ink);margin-top:8px}
+  .hd .role .tag{background:var(--yellow);color:var(--ink);border-radius:5px;padding:2px 8px;font-weight:800;margin-right:6px}
+  .hd .ct{text-align:right;font-size:12.5px;color:var(--ink2);line-height:1.7;white-space:nowrap}
+  .hd .ct a{color:var(--ink2);text-decoration:none}
+  .hd .ct b{color:var(--ink)}
+
+  .summary{font-size:13.5px;color:var(--ink2);line-height:1.65;margin:16px 0 4px}
+  .summary b{color:var(--ink);font-weight:700}
+
+  section{margin-top:22px}
+  h2{font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);
+    padding-bottom:6px;border-bottom:1.5px solid var(--line);margin-bottom:12px}
+
+  .job{margin-bottom:15px}
+  .job:last-child{margin-bottom:0}
+  .jt{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+  .jt .org{font-size:15px;font-weight:800;letter-spacing:-.01em}
+  .jt .org .pos{font-weight:600;color:var(--ink2);font-size:13px;margin-left:7px}
+  .jt .date{font-size:12px;font-weight:600;color:var(--mute);white-space:nowrap;font-variant-numeric:tabular-nums}
+  .job ul{list-style:none;margin-top:6px}
+  .job li{font-size:12.8px;color:var(--ink2);line-height:1.6;padding-left:14px;position:relative;margin-top:2px}
+  .job li::before{content:"";position:absolute;left:2px;top:9px;width:4px;height:4px;border-radius:50%;background:var(--accent)}
+  .job li b{color:var(--ink);font-weight:700}
+
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px 26px}
+  .row{font-size:12.8px;color:var(--ink2);line-height:1.5;padding:5px 0;border-top:1px solid var(--line);display:flex;gap:8px}
+  .row:first-child,.grid2 .row:nth-child(2){border-top:none}
+  .row .y{font-weight:800;color:var(--accent-ink);font-variant-numeric:tabular-nums;flex:none;min-width:34px}
+  .row b{color:var(--ink);font-weight:700}
+
+  footer{margin-top:26px;padding-top:12px;border-top:1px solid var(--line);
+    font-size:11px;color:var(--mute);text-align:center}
+
+  @media print{
+    body{background:#fff;padding:0}
+    .sheet{box-shadow:none;border-radius:0;max-width:none;padding:24px 30px}
+    @page{margin:12mm}
+  }
+  @media(max-width:640px){.sheet{padding:28px 22px}.hd{flex-direction:column;align-items:flex-start}.hd .ct{text-align:left}.grid2{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <div class="hd">
+    <div class="hleft">
+      <div class="photo">
+        <img src="img/profile.png" alt="Profile photo" onerror="this.style.display='none'">
+      </div>
+      <div>
+        <div class="name">Soyun Shim<span class="en">심소연</span></div>
+        <div class="role"><span class="tag">TARGET</span>Technology Strategy · Product Manager</div>
+      </div>
+    </div>
+    <div class="ct">
+      <div>📧 <a href="mailto:chelseadoer@gmail.com"><b>chelseadoer@gmail.com</b></a></div>
+      <div>🔗 <a href="https://www.linkedin.com/in/soyun-shim-27892a208/">linkedin.com/in/soyun-shim</a></div>
+      <div>📍 Seoul, South Korea</div>
+    </div>
+  </div>
+
+  <p class="summary">I define problems with data and want to solve the ones that <b>genuinely inconvenience customers</b>. <b>From founding a startup (CEO) to hands-on execution, I've led new services from 0 to 1</b>, and my strength is turning plans into real outcomes by aligning stakeholders with data and logic.</p>
+
+  <section>
+    <h2>Experience</h2>
+
+    <div class="job">
+      <div class="jt"><div class="org">E-Land World Group Online<span class="pos">Strategy &amp; Service Planning, PM</span></div><div class="date">2025.09 – Present</div></div>
+      <ul>
+        <li><b>Led planning of Kidikidi's AI search service</b> — from problem definition to tag-ontology and search/safety policy design; led collaboration with the external dev agency, data team, and merchandisers</li>
+        <li><b>Designed a brand-onboarding scoring model</b> — quantified previously intuition-based decisions with social &amp; demand data; 100% auto-computed criteria, established as a standard process</li>
+        <li><b>Designed a designer-brand onboarding system</b> — standardized exposure structure, onboarding packages, and fee policy</li>
+      </ul>
+    </div>
+
+    <div class="job">
+      <div class="jt"><div class="org">E-Land World HRD Institute<span class="pos">Strategic Planning</span></div><div class="date">2024.07 – 2026.08</div></div>
+      <ul>
+        <li><b>SPAO D2C growth strategy</b> — redefined the core target using purchase data and redesigned the IA, purchase journey, and screens</li>
+      </ul>
+    </div>
+
+    <div class="job">
+      <div class="jt"><div class="org">SsoYoung<span class="pos">Founder &amp; CEO</span></div><div class="date">2022.05 – 2025.02</div></div>
+      <ul>
+        <li><b>Founded 'Gilog,' a parenting-diary service</b> — pivoted a general journaling app into a parenting vertical (redesigning business model, target, and cost structure together)</li>
+        <li><b>FASTAR</b> — a K-pop-based styling global commerce; sold directly to Taiwan, Southeast Asia, and the US with localization (planning &amp; marketing)</li>
+        <li>Multiple government &amp; institutional startup grants and awards <span style="color:var(--mute)">(see Awards below)</span></li>
+      </ul>
+    </div>
+
+    <div class="job">
+      <div class="jt"><div class="org">KREAM<span class="pos">Digital Marketing Intern</span></div><div class="date">2024.01 – 2024.04</div></div>
+      <ul><li>Digital marketing and content operations</li></ul>
+    </div>
+
+    <div class="job">
+      <div class="jt"><div class="org">Korean National Commission for UNESCO<span class="pos">UNESCO School Intern</span></div><div class="date">2021.01 – 2021.03</div></div>
+      <ul><li>Supported international education and cultural-exchange programs</li></ul>
+    </div>
+  </section>
+
+  <section>
+    <h2>Education</h2>
+    <div class="job">
+      <div class="jt"><div class="org">Ewha Womans University<span class="pos">Bachelor's Degree</span></div><div class="date">2020.03 – 2025.02</div></div>
+      <ul>
+        <li>Major: <b>International Office Administration</b> · Double Major: <b>Entrepreneurship</b> · Minor: <b>Fashion Industry</b></li>
+        <li><b>Summa Cum Laude</b> (GPA 4.18 / 4.3)</li>
+      </ul>
+    </div>
+    <div class="job" style="margin-bottom:0">
+      <div class="jt"><div class="org">Hanyoung Foreign Language High School<span class="pos">Spanish Major</span></div><div class="date">2017.03 – 2020.02</div></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Awards &amp; Honors</h2>
+    <div class="grid2">
+      <div class="row"><span class="y">2024</span><div>Zonta Women in Business — Selected</div></div>
+      <div class="row"><span class="y">2023</span><div>Kyung Hee Campus Town Demo Day — Grand Prize</div></div>
+      <div class="row"><span class="y">2023</span><div>Pre-Startup Package, Ministry of SMEs and Startups — Selected</div></div>
+      <div class="row"><span class="y">2022</span><div>Software Startup Competition (Ewha) — Top Prize</div></div>
+      <div class="row"><span class="y">2022</span><div>I-Corps — Best Team</div></div>
+      <div class="row"><span class="y">2021</span><div>Korea Women's Venture Association Program — Selected</div></div>
+      <div class="row"><span class="y">2021</span><div>Ministry of Education — Certified Startup Team</div></div>
+      <div class="row"><span class="y">2021</span><div>Student Startup Challenger 300 — Top Team</div></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Additional Activities</h2>
+    <div class="grid2">
+      <div class="row"><span class="y">·</span><div><b>World Knowledge Forum</b> — Speaker Lounge Interpretation/Translation <span style="color:var(--mute)">(business-level English)</span></div></div>
+      <div class="row"><span class="y">·</span><div><b>German Entrepreneurship Asia</b> — Strategy Intern</div></div>
+      <div class="row"><span class="y">·</span><div><b>Ministry of Science and ICT</b> — i-Corps Lab-to-Market Track (Completed)</div></div>
+      <div class="row"><span class="y">·</span><div><b>D.CAMP</b> — Salon HCI Lab Program (Completed)</div></div>
+    </div>
+  </section>
+
+  <footer>Soyun Shim · Technology Strategy · chelseadoer@gmail.com</footer>
+
+</div>
+</body>
+</html>
